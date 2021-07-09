@@ -39,8 +39,8 @@ tmp<-cbind(umapCoord, batch=cov.m_filt$replicate, cluster=cov.m_filt$seurat_clus
 write.csv(tmp, file="10x_aggr_step1.csv")
 
 #Remove B cells and monocytes
-#aggr<-readRDS("10x_aggr_step1.rds")
-aggr<-readRDS("/Volumes/Asya/SJTRC/InfvsVac/10x/10x_aggr_step1.rds")
+aggr<-readRDS("10x_aggr_step1.rds")
+
 Idents(aggr) <- "seurat_clusters"
 cl.markers <- FindAllMarkers(aggr, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
 
