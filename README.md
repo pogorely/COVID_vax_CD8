@@ -1,6 +1,6 @@
 ## Data and scripts for study Minervina, Pogorelyy et al. 2021
 
-This R code uses aggregated _cellranger_ output (folder _liba_aggregate_) and adds TCR, UMAP GEX coordinates, GEX cluster, and epitope specificity info for each CD8+ T cell from the study. 
+This R code uses aggregated _cellranger_ output (folder _libs_aggregate_) and adds TCR, UMAP GEX coordinates, GEX cluster, and epitope specificity info for each CD8+ T cell from the study. 
 
 ## How to run
 Install neccesary R packages (_Seurat_ version 3.2.3, _data.table_, _igraph_, _stringr_, _viridis_). Run:
