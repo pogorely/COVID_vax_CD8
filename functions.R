@@ -1,7 +1,6 @@
 library(data.table)
 library(igraph)
 library(stringr)
-library(data.table)
 library(Seurat)
 library(viridis)
 
