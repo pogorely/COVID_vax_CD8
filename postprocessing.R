@@ -108,7 +108,7 @@ tmp<-cbind(umapCoord, batch=cd8$replicate, cluster=cd8$seurat_clusters, tsneCoor
            TOX=cd8$TOX, EOMES=cd8$EOMES, TBX21=cd8$TBX21)
 write.csv(tmp, file="cd8_only_genes.csv")
 saveRDS(cd8, file = "cd8_only.rds")
-write.csv(cd8,file="cd8_only.csv")
+#write.csv(cd8,file="cd8_only.csv")
 
 ##part two: add CITEseq, TCRseq, dextramer info
 
@@ -122,7 +122,7 @@ setkey(legend,batch,hash,dex)
 tmp<-character()
 tmpd<-character()
 tmps<-character()
-for (i in 1:nrow(inf_analysis_rev[grepl("FB.*FB",bestdex16),])) # prblem here now: two FB_dex. join them by |!!!
+for (i in 1:nrow(inf_analysis_rev[grepl("FB.*FB",bestdex16),])) 
 {   
   ind<-inf_analysis_rev[grepl("FB.*FB",bestdex16),,][i,.(batch,hash,dex=as.integer(unlist(strsplit(gsub("FB_dex","",bestdex16),split = "_")))),]
   tmp[i]<-(legend[ind,paste(dex_id,collapse="|"),])
@@ -139,7 +139,7 @@ inf_analysis_rev[bestdex16_max<4,spike:=NA,]
 inf_analysis_rev[bestdex16_max<4,donor:=NA,]
 inf_analysis_rev[bestdex16_max<4,sample_category:=NA,]
 
-inf_analysis_rev[!is.na(cdr3b_nt)&!is.na(cdr3a_nt),clonotype_id:=.GRP,.(batch,cdr3b_nt,cdr3a_nt)] #same CDR3b_nt, cdr3a_nt, within a batch -> no collisions? 
+inf_analysis_rev[!is.na(cdr3b_nt)&!is.na(cdr3a_nt),clonotype_id:=.GRP,.(batch,cdr3b_nt,cdr3a_nt)] 
 inf_analysis_rev[!is.na(cdr3b_nt),clonotype_id_beta:=.GRP,.(batch,cdr3b_nt)] 
 
 
@@ -162,12 +162,12 @@ inf_analysis_rev$spike_clone<-FALSE
 inf_analysis_rev[dextr_clone%in%c("A24_NYN","B15_NQK_A","B15_NQK_Q","B44_AEA","B44_AEV","A24_QYI","A02_YLQ","A01_LTD","B15_NQK_A|B15_NQK_Q","B15_NQK_Q|B15_NQK_A"),spike_clone:=TRUE,]
 inf_analysis_rev[is.na(dextr_clone),spike_clone:=NA,]
 
-#epitope column: fixed NQF/NAF double assignments, filtered other umbiguous assignments
+#epitope column: fixed NQF/NAF double assignments, filtered other ambiguous assignments
 inf_analysis_rev[dextr=="B15_NQK_A|B15_NQK_Q",dextr:="B15_NQK_Q|B15_NQK_A",]
 inf_analysis_rev[dextr%in%c("B15_NQK_A|B15_NQK_Q","B15_NQK_Q|B15_NQK_A"),spike:=TRUE,]
 inf_analysis_rev[,epitope:=dextr_clone,]
 inf_analysis_rev[epitope%in%c("B15_NQK_A","B15_NQK_Q","B15_NQK_A|B15_NQK_Q","B15_NQK_Q|B15_NQK_A"),epitope:="B15_NQK",]
-inf_analysis_rev[grepl("|",epitope,fixed=T),epitope:=NA,] #B44_AEV|B44_AEA also causes a problem here. 21 cells
+inf_analysis_rev[grepl("|",epitope,fixed=T),epitope:=NA,] 
 inf_analysis_rev[is.na(epitope),spike_clone:=NA,]
 inf_analysis_rev[grepl("|",donor,fixed=T),donor:=NA,]
 inf_analysis_rev[grepl("|",donor_clone,fixed=T),donor_clone:=NA,]
